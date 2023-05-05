@@ -1,0 +1,93 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="list_booking">
+                        <thead>
+                            <tr>
+                                <th> User Name </th>
+                                <th> Address</th>
+                                <th> Status </th>
+                                <th> Created Date </th>
+                                {%if request.user.role == 'MU' %}
+                                <th> Collection Agent</th>
+                                {%endif%}
+                                <th> Collection Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for booking in bookings%}
+                            <tr>
+                                <td>{{booking.smartbin.user.first_name}} {{booking.smartbin.user.last_name}} </td>
+                                <td>{{booking.smartbin.user.housename}} <br>
+                                    {{booking.smartbin.user.place}} <br>
+                                    {{booking.smartbin.user.postcode}} <br>
+                                    {{booking.smartbin.user.state}} <br>
+                                </td>
+                                <td> {{booking.status}}</td>
+                                <td> {{booking.created_date}} </td>
+                                {%if request.user.role == 'MU'%}
+                                <td>
+                                    {% if booking.collection_agent == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{booking.collection_agent.first_name}} {{booking.collection_agent.last_name}}
+                                    {%endif%}
+                                </td>
+                                {%endif%}
+                                <td>
+                                    {% if booking.collection_date == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{booking.collection_date}}
+                                    {%endif%}
+                                </td>
+                                {%if request.user.role == 'MU'%}
+                                <td><a href="{% url 'detailed_view' booking.id %}" class="btn btn-primary ">Detailed
+                                        View</a></td>
+                                {%endif%}
+                                {%if request.user.role == 'CA'%}
+                            <td><a href="{% url 'navigate' location.id %}" class="btn btn-primary" target="_blank">Navigate</a></td>
+                            {%endif%}
+                            </tr>
+                            {%endfor%}
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script>
+    $(function () {
+        $("#list_booking").dataTable();
+    })
+</script>
+{% if location %}
+<script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        center: new google.maps.LatLng(location.latitude,location.longitude),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+    
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(location.latitude,location.longitude),
+        map: map,
+        title: '{{ location.address }}'
+      });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQMwCmZA5WO1ZBEXe-rKNPunXlizYhgwM&callback=initMap"></script>
+<div id="map" style="height: 500px;"></div>
+{%endif%}
+{%endblock%}

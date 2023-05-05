@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="card mx-auto  text-center w-75">
+    <div class="card-body">
+        {%if smartbin.fill_status == True%}
+        <h5>Already Booked</h5>
+        {%else%}
+        <h3>Your Smart Bin full? Are you facing any Network issue? Then click below</h3>
+        <form method="post" action="{% url 'manual_booking' %}">
+        {%csrf_token%}<button class="btn btn-primary mx-auto mt-4" type="submit">Book yourself</form>
+    </div>
+</div>
+{%endif%}
+{%endblock%}

@@ -1,0 +1,75 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="recycler_history">
+                        <thead>
+                            <tr>
+                                {%if request.user.role == 'RE' or request.user.role == 'CA'%}
+                                <th> User Name </th>
+                                <th> Address</th>
+                                <th> Phone Number</th>
+                                {%endif%}
+                                <th> Status </th>
+                                <th> Paper Waste Amount/Kg </th>
+                                <th> Metal Waste Amount/Kg </th>
+                                <th>Created Date</th>
+                                {%if request.user.role == 'RE' or request.user.role == 'CU'%}
+                                <th>Collection Agent</th>
+                                {%endif%}
+                                <th> Collection Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for recycler_booking in recycler_bookings%}
+                            <tr>
+                                {%if request.user.role == 'RE' or request.user.role == 'CA'%}
+                                <td>{{recycler_booking.user.first_name}} {{booking.smartbin.user.last_name}}</td>
+                                <td>{{recycler_booking.user.housename}} <br>
+                                    {{recycler_booking.user.place}} <br>
+                                    {{recycler_booking.user.postcode}} <br>
+                                    {{recycler_booking.user.state}} <br>
+                                </td>
+                                <td>{{recycler_booking.user.phone}}</td>
+                                {%endif%}
+                                <td> {{recycler_booking.status}}</td>
+                                <td> {{recycler_booking.paper_waste}}</td>
+                                <td> {{recycler_booking.metal_waste}}</td>
+                                <td> {{recycler_booking.created_date}} </td>
+                                {%if request.user.role == 'RE' or request.user.role == 'CU'%}
+                                <td>
+                                    {% if recycler_booking.collection_agent == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{recycler_booking.collection_agent.first_name}} {{recycler_booking.collection_agent.last_name}}
+                                    {%endif%}
+                                </td>
+                                {%endif%}
+                                <td>
+                                    {% if recycler_booking.collection_date == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{recycler_booking.collection_date}}
+                                    {%endif%}
+                                </td>
+                            </tr>
+                           {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script>
+    $(function () {
+        $("#recycler_history").dataTable();
+    })
+</script>
+{%endblock%}

@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+{%for message in messages%}
+    <div class="alert alert-danger">
+        <span> {{message}}</span>
+    </div>
+    {%endfor%}
+{% if smartbin.bin_id == None %}
+<div class="card  w-50 mx-auto">
+  <div class="card-body text-center">
+    <h3>Smart Bin not linked yet!! </h3>
+    <a href="{%url 'link_bin' %}" class="btn btn-primary mt-4">LINK NOW</a>
+  </div>
+</div>
+{%else%}
+<div class="card bg-light mb-3 w-50 mx-auto" >
+    <div class="card-body">
+      <div class="text-center">
+      <img class="card-img-top " src="{% static 'images/bin.png' %}" alt="Card image cap" style="height: 250px; width:250px">
+      <h2 >Bin ID: {{smartbin.bin_id}}</h2>
+      {%if smartbin.fill_status == True %}
+        <h3 class="text-danger display-3">Your Bin is full</h3>
+        <h5 class="card-title mt-3 mb-1">Booking Status: {{booking.status}}</h5><br>
+        <h5 class="card-title">Collection Date: 
+          {%if booking.collection_date == None %}
+          not updated
+          {%else%} 
+          {{booking.collection_date}}
+          {%endif%}
+        </h5>
+        <h6>Collection Amount: {{waste_amount.amount}}</h6>
+        {% if booking.status == 'Collected'%}
+        <h3 class="mt-4">Is your waste collected? If Yes,click below</h3>
+        <form method="post" action="{% url 'smartbin_collect_verify' %}">
+          {%csrf_token%}<button class="btn btn-primary mx-auto" type="submit">Verify</form>
+        {%endif%}
+      {%else%}
+      <h3 class="text-success display-3">Your Bin is not full</h3>
+      {%endif%}
+      <form method="post" action="{% url 'unlink_bin' %}">
+        {%csrf_token%}<button class="btn btn-danger mx-auto mt-4" type="submit">Unlink Now</form>
+    </div>
+  </div>
+</div>
+
+    {%endif%}
+
+  {% endblock %}
+
+  
+
+
+   

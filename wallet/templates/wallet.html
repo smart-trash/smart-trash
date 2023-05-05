@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container">
+    <div class="alert alert-success d-none notify" role="alert">
+        Transaction Successfull
+    </div>
+    <div class="card mx-auto" style="width: 18rem; ">
+        <div class="card-body">
+            <h5 class="card-title">Balance Amount:</h5>
+            <h2 class="card-subtitle mb-2 text-muted">RS:<span id="amount_display">{{wallet.amount}}</span></h2>
+        </div>
+    </div><br>
+   
+    <div class="mx-auto mt-3">
+        <h3 class="text-center d-3">ADD MONEY</h3>
+        <div class="input-group mb-2 mr-sm-2 w-50 mx-auto">
+            <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+            </div>
+            
+            <input type="text" class="form-control " id="amount_enter" name="amount" placeholder="Enter Amount">
+        </div>
+        <div class="text-center mt-4">
+        <div id="paypal-button-container"></div></div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script
+    src="https://www.paypal.com/sdk/js?client-id=ASwtSGB_nPCwoLnnYa7B0MRjGOEpeS3aBNCP2n0JRfbCGt2lqNeUeVyifOYP2moD9xhgbfbmCre8Devt&currency=USD"></script>
+<script>
+    paypal.Buttons({
+        // Set up the transaction
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: $('#amount_enter').val()
+                    }
+                }]
+            });
+        },
+        // Finalize the transaction
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (orderData) {
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                var amount = transaction.amount.value;
+                var data = {
+                    "csrfmiddlewaretoken": '{{csrf_token}}',
+                    'amount': amount
+                }
+                $.ajax({
+                    url: "{%url 'add_wallet' %}",
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('.notify').removeClass('d-none')
+                        $('#amount_display').text(data.amount)
+                        $('#amount_enter').val('')
+
+                    }
+                })
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+{%endblock%}

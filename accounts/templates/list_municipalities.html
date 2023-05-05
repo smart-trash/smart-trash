@@ -1,0 +1,57 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="list_customer">
+                        <thead>
+                            <tr>
+                                <th> Name </th>
+                                <th> Phone Number </th>
+                                <th> Email </th>
+                                <th> Status</th>
+                                <th>Post Code </th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for user in users%}
+                            <tr>
+                                <td> {{user.first_name}} </td>
+                                <td> {{user.phone}}</td>
+                                <td> {{user.email}} </td>
+                                <td>
+                                    {% if user.is_active == True %}
+                                     <span class="badge badge-success">Approved</span>
+                                    {%else%}
+                                     <span class="badge badge-danger">Disapproved</span>
+                                    {%endif%}
+                                </td>
+                                <td> {{user.postcode}}</td>
+                                <td>{{user.state}} </td>
+                                <td>{{user.country}}</td>
+
+                                <td>                         
+                                    <form method="post" action="{% url 'change_status_municipalities' user.id %}">
+                                        {%csrf_token%}<button class="btn btn-warning btn-sm" type="submit">APPROVE/DISAPPROVE</form>
+                                </td>
+                                <td>                         
+                                    <form method="post" action="{% url 'remove_municipalities' user.id %}">
+                                        {%csrf_token%}<button class="btn btn-danger btn-sm" type="submit">Remove</form>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

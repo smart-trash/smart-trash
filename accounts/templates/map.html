@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="hero">
+        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+                <form method="post" >
+                        {%csrf_token%}
+                        <div class="row mt-2">
+                                <div class="col-md-4 form-group"><label class="labels">Location Name</label><input
+                                type="text" class="form-control" name="name" id="name" required></div>
+                                <div class="col-md-4 form-group"><label class="labels">Latitude</label><input
+                                  type="text" class="form-control"name="latitude" id="id_latitude" required></div>
+                                <div class="col-md-4 form-group"><label class="labels">Last name</label><input
+                                    type="text" class="form-control" name="longitude" id="id_longitude" required></div>
+                        </div>
+                        <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button" type="submit">Save</button>
+                        </div>
+                        <div class="row mt-3">
+                          <div id="map" style="width: 100%; height: 500px;"></div>
+                        </div>
+                </form>
+        </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCQMwCmZA5WO1ZBEXe-rKNPunXlizYhgwM"></script>
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
+        });
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {lat: -34.397, lng: 150.644}
+        });
+        google.maps.event.addListener(marker, 'dragend', function() {
+            var latlng = marker.getPosition();
+            document.getElementById('id_latitude').value = latlng.lat();
+            document.getElementById('id_longitude').value = latlng.lng();
+        });
+    }
+
+    window.onload = function() {
+        initMap();
+    }
+</script>
+{% endblock %}
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Add Location</title>
+    
+</head>
+<body onload="initMap()">
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name"><br>
+        <label for="latitude">Latitude:</label>
+        <input type="text" name="latitude" id="id_latitude"><br>
+        <label for="longitude">Longitude:</label>
+        <input type="text" name="longitude" id="id_longitude"><br>
+        <div id="map" style="width: 500px; height: 400px;"></div>
+        <br>
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>
+ -->

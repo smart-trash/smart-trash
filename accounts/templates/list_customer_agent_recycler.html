@@ -1,0 +1,126 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="list_customer">
+                        <thead>
+                            <tr>
+                                {% if is_agent_page == True or is_customer_page == True %}
+                                <th> First Name </th>
+                                <th> Last Name </th>
+                                {%endif%}
+                                {% if is_recycler_page == True %}
+                                <th>Name</th>
+                                {%endif%}
+                                <th> Phone No </th>
+                                <th> Email </th>
+                                <th> Status</th>
+                                {% if is_recycler_page == True %}
+                                <th> Building Name</th>
+                                {%endif%}
+                                {% if is_agent_page == True or is_customer_page == True %}
+                                <th> House Name </th>
+                                {%endif%}
+                                <th> Place</th>
+                                <th>Post Code </th>
+                                <th>State</th>
+                                <th>Country</th>
+                                {% if is_agent_page == True or is_customer_page == True %}
+                                <th>Profile image</th>
+                                {%endif%}
+                                {% if is_agent_page == True %}
+                                   <th>Aadhaar Number</th>
+                                   <th>License Number</th>
+                                   <th>Aadhaar Image</th>
+                                   <th>License Image</th>
+                                {%endif%}
+                                <th></th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for user in users%}
+                            <tr>
+                                <td> {{user.first_name}}</td>
+                                {% if is_agent_page == True or is_customer_page == True  %}
+                                <td> {{user.last_name}} </td>
+                                {%endif%}
+                                <td> {{user.phone}}</td>
+                                <td> {{user.email}} </td>
+                                <td>
+                                    {% if user.is_active == True %}
+                                     <span class="badge badge-success">Approved</span>
+                                    {%else%}
+                                     <span class="badge badge-danger">Disapproved</span>
+                                    {%endif%}
+                                </td>
+                                <td> {{user.housename}}</td>
+                                <td> {{user.place}}</td>
+                                <td> {{user.postcode}}</td>
+                                <td>{{user.state}} </td>
+                                <td>{{user.country}}</td>
+                                {% if is_agent_page == True or is_customer_page == True %}
+                                <td><img src="{{user.profile_image_url}}" alt=""></td>
+                                {%endif%}
+                                {% if is_agent_page == True %}
+                                    {%for agent in agents%}
+                                        {%if user.id == agent.user_id%}
+                                            <td>{{agent.aadhaar_number}}</td>
+                                            <td>{{agent.license_number}}</td>
+                                            <td><img src="{{agent.aadhaar_image_url}}" alt=""></td>
+                                            <td><img src="{{agent.license_image_url}}" alt=""></td>
+                                        {%endif%}
+                                    {%endfor%}   
+                                {%endif%}
+
+                                {% if is_agent_page == True %}
+                                    <td>                         
+                                        <form method="post" action="{% url 'change_status_agent' user.id %}">
+                                            {%csrf_token%}<button class="btn btn-warning btn-sm" type="submit">APPROVE/DISAPPROVE</form>
+                                    </td>
+                                    <td>                         
+                                        <form method="post" action="{% url 'remove_agent' user.id %}">
+                                            {%csrf_token%}<button class="btn btn-danger btn-sm" type="submit">Remove</form>
+                                    </td>
+                                {%elif is_customer_page == True %}
+                                    <td>                         
+                                        <form method="post" action="{% url 'change_status_customer' user.id %}">
+                                            {%csrf_token%}<button class="btn btn-warning btn-sm" type="submit">APPROVE/DISAPPROVE</form>
+                                    </td>
+                                    <td>                         
+                                        <form method="post" action="{% url 'remove_customer' user.id %}">
+                                            {%csrf_token%}<button class="btn btn-danger btn-sm" type="submit">Remove</form>
+                                    </td>
+                                {%else%}
+                                <td>                         
+                                    <form method="post" action="{% url 'change_status_recycler' user.id %}">
+                                        {%csrf_token%}<button class="btn btn-warning btn-sm" type="submit">APPROVE/DISAPPROVE</form>
+                                </td>
+                                <td>                         
+                                    <form method="post" action="{% url 'remove_recycler' user.id %}">
+                                        {%csrf_token%}<button class="btn btn-danger btn-sm" type="submit">Remove</form>
+                                </td>
+                                {%endif%}
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+{%block script%}
+<script>
+    $(function () {
+        $("#list_customer").dataTable();
+    })
+</script>
+{%endblock%}

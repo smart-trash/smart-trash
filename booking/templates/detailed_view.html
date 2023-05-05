@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<div class="card text-center w-50 mx-auto">
+    <div class="card-body">
+        <h3 class="card-title">User Name:{{booking.smartbin.user.first_name}}</h3>
+        <h4 class="card-title">Phone Number:{{booking.smartbin.user.phone}}</h4>
+        <h4 class="card-title">Email:{{booking.smartbin.user.email}}</h4>
+        <h5 class="card-title">Address:{{booking.smartbin.user.housename}}<br>
+            {{booking.smartbin.user.place}}<br>
+            {{booking.smartbin.user.postcode}}<br>
+            {{booking.smartbin.user.state}}</h5>
+        <h4 class="card-title">Bin Status:{{booking.status}}</h4>
+        <h4 class="card-title">Created Date:{{booking.created_date}}</h4>
+        <h4 class="card-title">Collection Agent: {% if booking.collection_agent == None %}
+            <span class="text-danger">Unassigned</span>
+            {%else%}
+            {{booking.collection_agent.first_name}} {{booking.collection_agent.last_name}}
+            {%endif%}
+        </h4>
+        <h4 class="card-title">Collected Date:
+            {% if booking.collection_date == None %}
+            <span class="text-danger">Unassigned</span>
+            {%else%}
+            {{booking.collection_date}}
+            {%endif%}
+        </h4>
+    </div>
+</div>
+<br>
+{%if not booking.status == 'VERIFIED'%}
+<form method="post">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <select class="form-control form-control-lg " name="collection_agent" required>
+                {% for agent in agents%}
+                <option value="{{agent.id}}">{{agent.first_name}} {{agent.last_name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <input type="date" class="form-control form-control-lg" name="date" required>
+        </div>
+    </div>
+    <div class="mt-5 text-center">{%csrf_token%}<button class="btn btn-primary " type="submit">UPDATE</button></div>
+</form>
+{%endif%}
+
+{%endblock%}

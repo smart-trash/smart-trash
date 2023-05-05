@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block content %}
+<form method="post">
+    {%csrf_token%}
+<div class="card w-50 mx-auto">
+    <div class="card-body">
+      <div class="form-group">
+        <label>Price for Paper Waste/Kg</label>
+        <input type="text" class="form-control" placeholder="Set paper price" name="paper_amount" value="{{recycler_amount.paper_amount}}">
+      </div>
+      <div class="form-group">
+        <label>Price for Metal Waste/Kg</label>
+        <input type="text" class="form-control" placeholder="Set iron price" name="metal_amount" value="{{recycler_amount.metal_amount}}" >
+      </div>
+      <div class="form-group">
+        <label>Collection amount for agents</label>
+        <input type="text" class="form-control" placeholder="Set collection amount" name="agent_amount" value="{{recycler_amount.agent_amount}}">
+      </div>
+      <div class="text-center">
+    <button class="btn btn-primary ">SET AMOUNT</button></div>
+    </div>""
+  </div>
+</form>
+  {%endblock%}

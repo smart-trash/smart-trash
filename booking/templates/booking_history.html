@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="history">
+                        <thead>
+                            <tr>
+                                {%if request.user.role == 'MU' or request.user.role == 'CA'%}
+                                <th> User Name </th>
+                                <th> Address</th>
+                                <th> Phone Number</th>
+                                {%endif%}
+                                <th> Status </th>
+                                <th>Created Date</th>
+                                {%if request.user.role == 'MU' or request.user.role == 'CU'%}
+                                <th>Collection Agent</th>
+                                {%endif%}
+                                <th> Collection Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for booking in bookings%}
+                            <tr>
+                                {%if request.user.role == 'MU' or request.user.role == 'CA'%}
+                                <td>{{booking.smartbin.user.first_name}} {{booking.smartbin.user.last_name}}</td>
+                                <td>{{booking.smartbin.user.housename}} <br>
+                                    {{booking.smartbin.user.place}} <br>
+                                    {{booking.smartbin.user.postcode}} <br>
+                                    {{booking.smartbin.user.state}} <br>
+                                </td>
+                                <td>{{booking.smartbin.user.phone}}</td>
+                                {%endif%}
+                                <td> {{booking.status}}</td>
+                                <td> {{booking.created_date}} </td>
+                                {%if request.user.role == 'MU' or request.user.role == 'CU'%}
+                                <td>
+                                    {% if booking.collection_agent == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{booking.collection_agent.first_name}} {{booking.collection_agent.last_name}}
+                                    {%endif%}
+                                </td>
+                                {%endif%}
+                                <td>
+                                    {% if booking.collection_date == None %}
+                                    <span class="text-danger">Unassigned</span>
+                                    {%else%}
+                                    {{booking.collection_date}}
+                                    {%endif%}
+                                </td>
+                            </tr>
+                           {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+{%block script%}
+<script>
+    $(function () {
+        $("#history").dataTable();
+    })
+</script>
+{%endblock%}

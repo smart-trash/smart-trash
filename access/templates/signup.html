@@ -1,0 +1,162 @@
+{% extends 'base_access.html'%}
+{% load static %}
+{% block content %}
+<div id="hero">
+        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+                {%for message in messages%}
+                <div class="alert alert-danger">
+                        <span> {{message}}</span>
+                </div>
+                {%endfor%}
+                <h1 class="mt-5 mb-4">{{title}} </h1>
+                <form method="post" id="my-form" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        {% if is_agent_page is True or is_customer_page is True%}
+                        <div class="row mt-2">
+                                <div class="col-md-6 form-group"><label class="labels">First Name</label><input
+                                                type="text" class="form-control" placeholder="enter First name"
+                                                name="first_name" required></div>
+                                <div class="col-md-6 form-group"><label class="labels">Last name</label><input
+                                                type="text" class="form-control" value="" placeholder=" enter Last name"
+                                                name="last_name" required></div>
+                        </div>
+                        {%endif%}
+                        {% if is_recycler_page is True%}
+                        <div class="col-md-12 form-group"><label class="labels"> Name</label><input
+                                type="text" class="form-control" placeholder="Enter  name"
+                                name="name" required></div>
+                        {%endif%}
+                        <div class="row ">
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Phone Number</label>
+                                        <input type="text" class="form-control" placeholder="Enter phone number"
+                                                name="phone" required>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Email ID</label>
+                                        <input type="text" class="form-control" placeholder="Enter email id"
+                                                name="email" required>
+                                </div>
+                                {% if is_agent_page is True%}
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Aadhaar Number</label>
+                                        <input type="text" class="form-control" placeholder="Enter aadhaar number"
+                                                name="aadhaar" required>
+                                </div>
+                               
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Upload Aadhar card</label>
+                                        <input type="file" class="form-control" accept="image/*" name="aadhaar_pic"
+                                                required>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">License Number</label>
+                                        <input type="text" class="form-control" placeholder="Enter License number"
+                                                name="license" required>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Upload License</label>
+                                        <input type="file" class="form-control" accept="image/*" name="license_pic"
+                                                required>
+                                </div>
+                                {%endif%}
+                                {% if is_recycler_page is True%}
+                                <div class="col-md-12 mt-3">
+                                        <label class="labels">Building Name</label>
+                                        <input class="form-control" placeholder="Enter house name " name="building_name"
+                                                required>
+                                </div>
+                                {%endif%}
+                                {% if is_agent_page is True or is_customer_page is True%}
+                                <div class="col-md-12 mt-3">
+                                        <label class="labels">House Name</label>
+                                        <input class="form-control" placeholder="Enter house name " name="house_name"
+                                                required>
+                                </div>
+                                {%endif%}
+                                <div class="col-md-4 mt-3">
+                                        <label class="labels">Place</label>
+                                        <input type="text" class="form-control" placeholder="Enter your area"
+                                                name="place" required>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                        <label class="labels">Municipality</label>
+                                        <select name="municipality" id="municipality" class="form-control">
+                                                {%for municipality in municipalities%}
+                                                <option value="{{municipality.id}}">{{municipality.first_name}}</option>
+                                                {%endfor%}
+                                        </select>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                        <label class="labels">Postcode</label>
+                                        <input type="text" class="form-control" placeholder="Enter postcode" required
+                                                name="postcode">
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">State</label>
+                                        <input type="text" class="form-control" value="" placeholder="State"
+                                                name="state">
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Country</label>
+                                        <input type="text" class="form-control" placeholder="Country" name="country">
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Password</label>
+                                        <input type="password" class="form-control" placeholder="Enter password"
+                                                name="password1">
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Confirm Password</label>
+                                        <input type="password" class="form-control" placeholder="Re-enter your password"
+                                                name="password2">
+                                </div>
+                                {% if is_agent_page is True or is_customer_page is True%}
+                                <div class="col-md-6 mt-3">
+                                        <label class="labels">Upload Profile image</label>
+                                        <input type="file" class="form-control" accept="image/*" name="profile_image"
+                                                required>
+                                </div>
+                                {%endif%}
+                                
+                        </div>
+                        <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button" type="submit">Sign Up</button>
+                        </div>
+                </form>
+                <div id="error-message"></div>
+                <a href="{% url login_url_name %}">if you have already registered,Login </a>
+        </div>
+</div>
+{%endblock%}
+{%block script%}
+<script>
+ const form = document.getElementById('my-form');
+const errorMessage = document.getElementById('error-message');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault(); // prevent default form submission behavior
+  
+  const formData = new FormData(form); // capture form data
+  
+  // send form data via AJAX
+  fetch('/signup', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      errorMessage.textContent = data.message; // update error message
+    } else {
+      // handle successful form submission
+      // e.g. redirect to a success page
+      window.location.href = '/success';
+    }
+  })
+  .catch(error => console.error(error));
+});
+
+</script>
+
+{%endblock%}

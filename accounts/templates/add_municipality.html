@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row">
+    <form method="post" enctype="multipart/form-data" >
+        {%csrf_token%}
+        <div class="row mt-12">
+            <div class="col-md-12 form-group"><label class="labels">Name</label><input type="text"
+                class="form-control" placeholder="enter name" name="first_name" required>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-6 mt-3">
+                <label class="labels">Phone Number</label>
+                <input type="text" class="form-control" placeholder="Enter phone number" name="phone" required>
+            </div>
+            <div class="col-md-6 mt-3">
+                <label class="labels">Email ID</label>
+                <input type="text" class="form-control" placeholder="Enter email id" name="email" required >
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-4 mt-3">
+                <label class="labels">Postcode</label>
+                <input type="text" class="form-control" placeholder="Enter postcode" required name="postcode">
+            </div>
+            <div class="col-md-4 mt-3">
+                <label class="labels">State</label>
+                <input type="text" class="form-control" placeholder="State" name="state">
+            </div>
+            <div class="col-md-4 mt-3">
+                <label class="labels">Country</label>
+                <input type="text" class="form-control" placeholder="Country" name="country">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mt-3">
+                <label class="labels">Password</label>
+                <input type="password" class="form-control" placeholder="Enter password"
+                        name="password1">
+            </div>
+            <div class="col-md-6 mt-3">
+                <label class="labels">Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Re-enter your password"
+                        name="password2">
+            </div>
+        </div>
+        <div class="mt-5 text-center">
+            <button class="btn btn-primary profile-button" type="submit">ADD</button>
+        </div>
+    </form>
+</div>
+{%endblock%}

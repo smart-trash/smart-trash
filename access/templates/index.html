@@ -1,0 +1,227 @@
+{% extends 'base_access.html'%}
+{% load static %}
+{% block content %}
+<div id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="container" id="home">
+            <div class="row justify-content-center">
+                <div class="card-container mx-auto mt-5">
+                    <div class="card card-front">
+                        <img class="card-img-top" src="{% static 'access/resources/img/man.png'%}" alt="Card image cap"
+                            style="height: 200px;width:200px;margin: auto;padding:10px;">
+                        <div class="card-body custom-card-body">
+                            <h5 class="card-title text-center"><b>CUSTOMER</b></h5>
+                        </div>
+                    </div>
+                    <div class="card card-back">
+                        <div class="card-body custom-card-body ">
+                            <a href="{% url 'customer_login' %}" class="btn btn-success">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-container mx-auto mt-5">
+                    <div class="card card-front">
+                        <img class="card-img-top" src="{% static 'access/resources/img/seatbelt.png'%}" alt="Card image cap"
+                            style="height: 200px;width:200px;margin: auto;padding:10px;">
+                        <div class="card-body custom-card-body">
+                            <h5 class="card-title text-center"><b>COLLECTION AGENT</b></h5>
+
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                        </div>
+                    </div>
+                    <div class="card card-back">
+                        <div class="card-body custom-card-body ">
+                            <a href="{% url 'agent_login' %}" class="btn btn-success ">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card-container mx-auto mt-5 ">
+                    <div class="card card-front">
+                        <img class="card-img-top" src="{% static 'access/resources/img/businessman.png'%}" alt="Card image cap"
+                            style="height: 200px;width:200px;margin: auto;padding:10px;">
+                        <div class="card-body custom-card-body">
+                            <h5 class="card-title text-center"><b>MUNICIPALITY</b></h5>
+
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                        </div>
+                    </div>
+
+                    <div class="card card-back">
+                        <div class="card-body custom-card-body ">
+                            <a href="{% url 'municipality_login' %}" class="btn btn-success ">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-container mx-auto mt-5">
+                    <div class="card card-front">
+                        <img class="card-img-top" src="{% static 'images/recycle-bin.png'%}" alt="Card image cap"
+                            style="height: 200px;width:200px;margin: auto;padding:10px;">
+                        <div class="card-body custom-card-body">
+                            <h5 class="card-title text-center"><b>RECYCLER</b></h5>
+                        </div>
+                    </div>
+                    <div class="card card-back">
+                        <div class="card-body custom-card-body ">
+                            <a href="{% url 'recycler_login' %}" class="btn btn-success ">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======= About Section ======= -->
+
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-6">
+                <p>
+                    We aim to empower cities to manage and battle ever-growing volumes
+                    of urban and municipal waste. The growing volumes of waste are largely
+                    caused by two factors: large-scale urbanization and industry growth.
+                    The modern lifestyle around the globe produces much more waste per citizen 
+                    than only a decade ago. The United Nations projects 66% of the world´s
+                    population will live in cities by 2050. To sustain all these factors, problems 
+                    and challenges, cities need a sophisticated and efficient tool to manage waste 
+                    and monitor bins with sensors.The need-driven waste collection eliminates overflowing bins.
+                    Cities, as a result, become cleaner and free of litter,
+
+                </p>
+
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0">
+                <p>
+                      trash and garbage and sustainable solutions like recycling are promoted.
+
+                    Our application also provides information about the fill-level of 'Smart Trash' bin and notifies you when they need to be emptied.
+                    
+                    We support the digital transformation of waste management to achieve efficiency, transparency, and sustainability.
+ The major need of a smart lifestyle begins with cleanliness and cleanliness begins with dustbin. A society will get its waste dispatched properly only if the dustbins are placed well and collected as well.
+
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- End About Section -->
+
+    <!-- ======= Quotes Section ======= -->
+    <section id="testimonials" class="testimonials">
+        <div class="container" data-aos="fade-up">
+
+
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                We humans have become dependent on plastic for a range of uses, from packaging to products. 
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i><br><br> - David Suzuki
+                            </p>
+
+                        </div>
+                    </div>
+                    <!-- End Quotes item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                Pollution from oil and gas development, toxic runoff,
+                                 and miles and miles of plastic trash foul the waters
+                                  and threaten marine life
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i><br><br>– Frances Beinecke
+                            </p>
+
+                        </div>
+                    </div><!-- End testimonial item -->
+
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                You wouldn’t think you could kill an ocean,
+                                 would you? But we’ll do it one day.
+                                  That’s how negligent we are
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i><br><br>– Ian Rankin
+                            </p>
+
+                        </div>
+                    </div><!-- End testimonial item -->
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section><!-- End Testimonials Section -->
+</section>
+
+
+<!-- ======= Contact Section ======= -->
+<div class="outer" id="footer" style="background-color: #f0f8f8;" >
+    <div class="container mb-4">
+        <div class="container mb-4">
+            <h1 class="font-weight-light text-center py-3">Contact Us</h1>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="row pt-3">
+                        <div class="col-lg-1 offset-1 col-md-2 col-sm-2 col-2">
+                            <span style="font-size: 30px;color: rgb(236, 68, 68);"><i
+                                    class="fa-solid fa-location-dot"></i></span>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-sm-9 col-9">
+                            <h3 class="font-weight-light">Find Us</h3>
+                            <p>loremloremlorem,<br>loremipsumm,<br>romania</p>
+                        </div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-lg-1 offset-1 col-md-2 col-sm-2 col-2">
+                            <span style="font-size: 30px;color: rgb(38, 82, 230);"><i
+                                    class="fa-solid fa-phone"></i></span>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-sm-9 col-9">
+                            <h3 class="font-weight-light">Give Us A Ring</h3>
+                            <p>Smarttrash<br>9685243718,</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <form method="post" action="{%url 'contact_us' %}">
+                        {%csrf_token%}
+                        <div class="form-row">
+                            <div class="form-group col-lg-6 col-md-12 col-sm-12 col-12">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" name="first_name">
+
+                            </div>
+                            <div class="form-group col-lg-6 col-md-12 col-sm-12 col-12">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" name="last_name">
+                            </div>
+                        </div>
+                        <label>Email</label>
+                        <input type="Email" placeholder="Email" class="form-control" name="email">
+                        <label>Your Message</label>
+                        <textarea class="form-control mb-3" placeholder="Message" id="" cols="10" rows="5" name="message"></textarea>
+                        <button class="btn btn-primary float-right" type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

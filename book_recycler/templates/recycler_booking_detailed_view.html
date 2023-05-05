@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="card text-center w-50 mx-auto">
+    <div class="card-body">
+        <h3 class="card-title">Name:{{recycler_booking.user.first_name}}</h3>
+        <h5 class="card-title">Address:{{recycler_booking.user.housename}}<br>
+            {{recycler_booking.user.place}}<br>
+            {{recycler_booking.user.postcode}}<br>
+            {{recycler_booking.user.state}}</h5>
+        <h4 class="card-title">Paper Waste:{{recycler_booking.paper_waste}}</h4>
+        <h4 class="card-title">Metal Weight:{{recycler_booking.metal_waste}}</h4>
+        <h4 class="card-title">Created Date:{{recycler_booking.created_date}}</h4>
+        <h4 class="card-title">Collection Agent: {% if recycler_booking.collection_agent == None %}
+            <span class="text-danger">Unassigned</span>
+            {%else%}
+            {{recycler_booking.collection_agent.first_name}} {{recycler_booking.collection_agent.last_name}}
+            {%endif%}
+        </h4>
+        <h4 class="card-title">Collected Date:
+            {% if recycler_booking.collection_date == None %}
+            <span class="text-danger">Unassigned</span>
+            {%else%}
+            {{recycler_booking.collection_date}}
+            {%endif%}
+        </h4>
+    </div>
+</div>
+<br>
+{%if not recycler_booking.status == 'VERIFIED'%}
+<form method="post">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <select class="form-control form-control-lg " name="collection_agent" required>
+                {% for agent in agents%}
+                <option value="{{agent.id}}">{{agent.first_name}} {{agent.last_name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <input type="date" class="form-control form-control-lg" name="date" required>
+        </div>
+    </div>
+    <div class="mt-5 text-center">{%csrf_token%}<button class="btn btn-primary " type="submit">UPDATE</button></div>
+</form>
+{%endif%}
+
+{%endblock%}

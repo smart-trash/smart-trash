@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+{% block content %}
+
+<form method="post">
+    {%csrf_token%}
+    {%for message in messages%}
+    <div class="alert alert-danger">
+        <span> {{message}}</span>
+    </div>
+    {%endfor%}
+    <div class="card mx-auto" style="width: 40rem;">
+        <div class="card-body">
+          <p class="card-title">Have you collected the waste?
+            Then enter Bin ID below to complete your task</p>
+            <div class="col-md-3 mt-4">
+                <h4 class="labels text-center"><strong>Enter Bin ID</strong></h4>
+            </div>
+            <div class="col-md-9 mt-3">
+                <input type="text" name="bin_id" placeholder="Enter bin ID" class="form form-control" value="{%if bin_id is not None%}{{ bin_id }}{%endif%}">
+            </div>
+            <form method="post" action="{% url 'collect' %}">
+              {%csrf_token%}<button class="btn btn-primary mx-auto mt-3" type="submit">COLLECTED</form>
+        </div>
+      </div>
+
+</form>
+
+{%endblock%}

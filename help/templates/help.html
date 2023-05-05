@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="container">
+<div class="card w-75 mx-auto">
+    <div class="card-body">
+        <ul style="font-size: 18px;">
+            {%if request.user.role == 'CU'%}
+            <li>Each smart bin will have a unique identification number which is to be linked.
+                 After linking the smart bin, it is connected to the internet by connecting wifi to 'smart trash'.</li>
+            <li>Services like booking, etc will take place automatically once it is connected.
+                Manual booking can be done without even an internet connection.
+            </li>
+            <li>A handsome amount of money can be earned for all other wastes except plastic wastes by selling to recyclers in your municipality.</li>
+            <li>Booking history includes all the details of bookings done and recycler history includes status and details of price and amount of all the recyclable wastes. It also contains the date and details of the collection agent.
+            </li>
+            <li>The balance of the amount is shown in wallet. In order to add money, enter the amount in the input field and click 'Pay now'. This is done through Paypal.
+            </li>
+            <li>
+                If you have any questions, complaints or feedback, you can send them using the 'Enquiry' tab.
+
+            </li>
+            {%elif request.user.role == 'CA'%}
+            <li>All the details of the collection agent can be viewed from the profile. An option to update password is also provided so that collection agent can update it when needed.</li>
+            <li>Identification number of the bin is entered after collecting waste. A notification is sent to the customer for verification. They can verify it if their wallet contains the required amount or more.
+            </li>
+            <li>All the tasks assigned by the municipality which are pending are shown in 'tasks' section and those pending tasks which are assigned by recyclers are shown in 'Recycler task'.</li>
+            <li>The details of all the bookings which are completed in the past can be seen in the 'booking history'. </li>
+            <li>'Recycler history' includes the current status and details such as the date, amount , price of all the recyclable wastes. The details of the collection agent is also displayed.
+
+            </li>
+            <li>If you have any questions, complaints or feedback , you can send them using 'Enquiry' tab.</li>
+            {%elif request.user.role == 'MU'%}
+            <li>Profile contains all the information of the municipality which can also be updated if required.
+                An option to update password is also provided so that they can update it when needed.</li>
+            <li>All the tasks assigned to the collection agents are shown in 'tasks' section.
+            </li>
+            <li>Municipality can add and approve new customers under 'customer' tab.</li>
+            <li>Recyclers can also be added by municipality by approving their request using 'recycler' tab.</li>
+            <li>History displays all the tasks which are completed in the past.</li>
+            <li>'Set amount' is used to charge customers for the wastes collected from them.
+                The amount collected from the customers are added to the wallet. </li>
+            <li>All the questions, complaints or feedback sent by customers, collection agent and recyclers are shown in 'queries'.</li>
+            {%elif request.user.role == 'RE'%}
+            <li>The complete details of the recycler is displayed in profile and it can be updated anytime.
+                Wallet is used to either add or take money</li>
+            <li>Recyclers can charge customers for the wastes they collect using 'set amount'.</li>
+            <li>'Tasks' contains all the tasks pending which are assigned by the municipality.
+                All the completed tasks are shown in history.</li>
+                <li>If you have any questions, complaints or feedback , you can send them using 'Enquiry' tab.</li>
+            {%endif%}
+          </ul>
+  </div>
+</div>
+</div>
+{%endblock%}
